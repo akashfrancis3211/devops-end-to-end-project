@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-	Stage('diagnose') {
+	stage('diagnose') {
 	    steps {
 		bat 'echo %PATH%'
 		bat 'where python'
