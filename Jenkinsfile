@@ -3,6 +3,14 @@ pipeline {
 
     stages {
 
+	Stage('diagnose') {
+	    steps {
+		bat 'echo %PATH%'
+		bat 'where python'
+		bat 'python --version'
+	    }
+	}
+
         stage('validate') {
             steps {
                 bat 'python --version'
