@@ -1,22 +1,14 @@
 pipeline {
-	agent any
+    agent any
 
-	stages {
+    stages {
 
-		stage('checkout') {
-			steps {
-				checkout scm
-			}
-		}
+        stage('validate') {
+            steps {
+                bat 'python --version'
+                bat 'python -m py_compile app/app.py'
+            }
+        }
 
-
-		stage('validate') {
-			steps {
-				sh 'python3 --version'
-				sh 'python3 -m py_compile app/app.py'
-			}
-		}
-
-	}
+    }
 }
-
