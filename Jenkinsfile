@@ -25,11 +25,9 @@ pipeline {
 	   }
 	}
 	
-	stage('docker-check') {
+	stage('docker-build') {
 	    steps {
-		bat 'docker --version'
-		bat 'docker version'
-	  }
-	}
+		bat 'docker build -f docker/Dockerfile -t devops-task-api:%BUILD_NUMBER% .'
+	   }
     }
 }
