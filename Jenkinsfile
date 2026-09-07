@@ -17,6 +17,13 @@ pipeline {
                 bat 'python -m py_compile app/app.py'
             }
         }
+	
+	stage('test') {
+	    steps {
+		bat 'python -m pip install -r requirements-dev.txt'
+		bat 'python -m pytest -v'
+	   }
+	}
 
     }
 }
