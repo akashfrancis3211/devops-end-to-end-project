@@ -24,6 +24,12 @@ pipeline {
 		bat 'python -m pytest -v'
 	   }
 	}
-
+	
+	stage('docker-check') {
+	    steps {
+		bat 'docker --version'
+		bat 'docker version'
+	  }
+	}
     }
 }
