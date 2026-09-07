@@ -29,6 +29,13 @@ pipeline {
 	    steps {
 		bat 'docker build -f docker/Dockerfile -t devops-task-api:%BUILD_NUMBER% .'
 	   }
+        }
+
+	stage('docker-verify') {
+	    steps {
+		bat 'docker images devops-task-api'
+	   }
+        }
+
     }
-}
 }
