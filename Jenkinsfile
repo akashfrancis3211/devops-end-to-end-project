@@ -44,7 +44,7 @@ pipeline {
 	stage('trivy-security-scan') {
 	    steps {
 		bat 'trivy image --severity HIGH,CRITICAL --format json --output trivy-report.json --exit-code 0 devops-task-api:%BUILD_NUMBER%'
-		archiveArtifacts artifacts: 'trivy-report.json', fingerprint: True
+		archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
 
 		bat 'trivy image --severity HIGH,CRITICAL --exit-code 1 devops-task-api:%BUILD_NUMBER%'
 	   }
