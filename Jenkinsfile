@@ -57,10 +57,24 @@ pipeline {
                     usernameVariable: 'DOCKER_USERNAME',
                     passwordVariable: 'DOCKER_PASSWORD'
                 )]) {
-                    powershell '''
-			$env:Docker_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
-		'''
-		    bat 'docker push akashfrancis/devops-task-api:%BUILD_NUMBER%'
+                   
+			bat '''
+                		if "%DOCKER_USERNAME%"=="" (
+                    			echo ERROR: Docker username is empty
+                    			exit /b 1
+                )
+
+                		if "%DOCKER_PASSWORD%"=="" (
+                    			echo ERROR: Docker password is empty
+                    			exit /b 1
+                )
+
+                		echo Docker username is present
+                		echo Docker password is present
+                		echo Password length: %DOCKER_PASSWORD:~0,1%********
+
+                		docker logout
+            '''
                 }
             }
         }
