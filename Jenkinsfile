@@ -59,23 +59,20 @@ pipeline {
                 )]) {
                    
 			bat '''
-                		if "%DOCKER_USERNAME%"=="" (
-                    			echo ERROR: Docker username is empty
-                    			exit /b 1
-                )
 
-                		if "%DOCKER_PASSWORD%"=="" (
-                    			echo ERROR: Docker password is empty
-                    			exit /b 1
-                )
+				echo %DOCKER_PASSWORD%>docker-password.txt
 
-                		echo Docker username is present
-                		echo Docker password is present
-                		echo Password length: %DOCKER_PASSWORD:~0,1%********
+		                docker login -u %DOCKER_USERNAME% --password-stdin < docker-password.txt
+				if errorlevel 1 (
+					del /q docker-password.txt
+					exit /b 1
+					)
 
-                		docker logout
+				del /q docker-password.txt
             '''
-                }
+                
+		       bat 'docker push akashfrancis/devops-task-api:%BUILD_NUMBER%'
+		}
             }
         }
     }
