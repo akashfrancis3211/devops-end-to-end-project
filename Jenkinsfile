@@ -57,9 +57,9 @@ pipeline {
                     usernameVariable: 'DOCKER_USERNAME',
                     passwordVariable: 'DOCKER_PASSWORD'
                 )]) {
-                    powershell ```
+                    powershell '''
 			$env:Docker_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
-		```
+		'''
 		    bat 'docker push akashfrancis/devops-task-api:%BUILD_NUMBER%'
                 }
             }
