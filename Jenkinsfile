@@ -3,17 +3,17 @@ pipeline {
 
     stages {
 
-	stage('diagnose') {
-	    steps {
-		bat 'echo %PATH%'
-		bat 'where python'
-		bat 'python --version'
-		bat 'where docker'
-		bat 'docker --version'
-		bat 'where trivy'
-		bat 'trivy --version'
-	    }
-	}
+        stage('diagnose') {
+            steps {
+                bat 'echo %PATH%'
+                bat 'where python'
+                bat 'python --version'
+                bat 'where docker'
+                bat 'docker --version'
+                bat 'where trivy'
+                bat 'trivy --version'
+            }
+        }
 
         stage('validate') {
             steps {
@@ -21,33 +21,46 @@ pipeline {
                 bat 'python -m py_compile app/app.py'
             }
         }
-	
-	stage('test') {
-	    steps {
-		bat 'python -m pip install -r requirements-dev.txt'
-		bat 'python -m pytest -v'
-	   }
-	}
-	
-	stage('docker-build') {
-	    steps {
-		bat 'docker build -f docker/Dockerfile -t devops-task-api:%BUILD_NUMBER% .'
-	   }
+
+        stage('test') {
+            steps {
+                bat 'python -m pip install -r requirements-dev.txt'
+                bat 'python -m pytest -v'
+            }
         }
 
-	stage('docker-verify') {
-	    steps {
-		bat 'docker images devops-task-api'
-	   }
+        stage('docker-build') {
+            steps {
+                bat 'docker build -f docker/Dockerfile -t akashfrancis/devops-task-api:%BUILD_NUMBER% .'
+            }
         }
 
-	stage('trivy-security-scan') {
-	    steps {
-		bat 'trivy image --severity HIGH,CRITICAL --format json --output trivy-report.json --exit-code 0 devops-task-api:%BUILD_NUMBER%'
-		archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
+        stage('docker-verify') {
+            steps {
+                bat 'docker images akashfrancis/devops-task-api'
+            }
+        }
 
-		bat 'trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 devops-task-api:%BUILD_NUMBER%'
-	   }
-	}
+        stage('trivy-security-scan') {
+            steps {
+                bat 'trivy image --severity HIGH,CRITICAL --format json --output trivy-report.json --exit-code 0 akashfrancis/devops-task-api:%BUILD_NUMBER%'
+                archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
+
+                bat 'trivy image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 akashfrancis/devops-task-api:%BUILD_NUMBER%'
+            }
+        }
+
+        stage('docker-push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
+                    bat 'docker push akashfrancis/devops-task-api:%BUILD_NUMBER%'
+                }
+            }
+        }
     }
 }
