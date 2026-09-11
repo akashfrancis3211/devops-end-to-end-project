@@ -75,5 +75,15 @@ pipeline {
 		}
             }
         }
+	Stage('k8s-connectivity') {
+	    steps {
+		bat 'whoami'
+		bat 'where kubectl'
+		bat 'kubectl config current-context'
+		bat 'kubectl get nodes'
+		bat 'where helm'
+		bat 'helm version'
+		}
+	}   
     }
 }
