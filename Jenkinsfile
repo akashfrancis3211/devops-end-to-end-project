@@ -75,7 +75,7 @@ pipeline {
 		}
             }
         }
-	Stage('k8s-connectivity') {
+	stage('k8s-connectivity') {
 	    steps {
 		bat 'whoami'
 		bat 'where kubectl'
