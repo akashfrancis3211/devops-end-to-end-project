@@ -81,7 +81,7 @@ pipeline {
 		bat 'whoami'
 		bat 'where kubectl'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config config current-context'
-		bat 'kubectl get nodes'
+		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get nodes'
 		bat 'where helm'
 		bat 'helm version'
 		}
