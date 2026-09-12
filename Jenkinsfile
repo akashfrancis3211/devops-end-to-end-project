@@ -82,8 +82,7 @@ pipeline {
 		bat 'where kubectl'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config config current-context'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get nodes'
-		bat 'where helm'
-		bat 'helm version'
+		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe version'
 		}
 	}   
     }
