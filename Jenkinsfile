@@ -12,6 +12,7 @@ pipeline {
                 bat 'docker --version'
                 bat 'where trivy'
                 bat 'trivy --version'
+		bat 'kubectl --kubeconfig` C:\\Users\\91998\\.kube\\config get nodes'
             }
         }
 
