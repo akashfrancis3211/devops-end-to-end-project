@@ -80,7 +80,7 @@ pipeline {
 	    steps {
 		bat 'whoami'
 		bat 'where kubectl'
-		bat 'kubectl config current-context'
+		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config config current-context'
 		bat 'kubectl get nodes'
 		bat 'where helm'
 		bat 'helm version'
