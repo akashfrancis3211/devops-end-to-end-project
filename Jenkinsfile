@@ -83,6 +83,7 @@ pipeline {
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config config current-context'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get nodes'
 		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe version'
+		bat 'C:\\Users\\91998\\AppData\\LOcal\\Microsoft\\WinGet\\Links\\helm.exe list --kubeconfig C:\\Users\\91998\\.kube\\config'
 		}
 	}   
     }
