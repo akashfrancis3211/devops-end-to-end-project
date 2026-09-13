@@ -32,7 +32,7 @@ pipeline {
 
         stage('docker-build') {
             steps {
-                bat 'docker build -f docker/Dockerfile -t akashfrancis/devops-task-api:%BUILD_NUMBER% .'
+                bat 'docker build --pull -f docker/Dockerfile -t akashfrancis/devops-task-api:%BUILD_NUMBER% .'
             }
         }
 

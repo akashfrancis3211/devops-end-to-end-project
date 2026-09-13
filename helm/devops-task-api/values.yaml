@@ -1,0 +1,10 @@
+replicaCount: 3
+
+image:
+  repository: akashfrancis/devops-task-api
+  tag: "27"
+
+service:
+  type: ClusterIP
+  port: 5000
+  targetPort: 5000

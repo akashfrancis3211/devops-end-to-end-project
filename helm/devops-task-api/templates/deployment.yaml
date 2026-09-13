@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Release.Name }}-devops-task-api
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: devops-task-api
+
+  template:
+    metadata:
+      labels:
+        app: devops-task-api
+
+    spec:
+      containers:
+        - name: devops-task-api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+
+          ports:
+            - containerPort: 5000
