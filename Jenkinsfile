@@ -76,6 +76,7 @@ pipeline {
 		}
             }
         }
+
 	stage('k8s-connectivity') {
 	    steps {
 		bat 'whoami'
@@ -83,8 +84,16 @@ pipeline {
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config config current-context'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get nodes'
 		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe version'
-		bat 'C:\\Users\\91998\\AppData\\LOcal\\Microsoft\\WinGet\\Links\\helm.exe list --kubeconfig C:\\Users\\91998\\.kube\\config'
+		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe list --kubeconfig C:\\Users\\91998\\.kube\\config'
 		}
 	}   
+	stage('helm-deploy') {
+	    steps {
+		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe upgrade --install test-release .\\helm\\devops-task-api --set image.tag=%BUILD_NUMBER% --kubeconfig C:\\Users\\91998\\.kube\\config'
+		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config rollout status deployment/test-release-devops-task-api --timeout=120s'
+		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get pods -l app=devops-task-api -o wide'
+		}
+	}
+
     }
 }
