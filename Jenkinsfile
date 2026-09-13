@@ -90,7 +90,7 @@ pipeline {
 	stage('helm-deploy') {
 	    steps {
 		bat 'C:\\Users\\91998\\AppData\\Local\\Microsoft\\WinGet\\Links\\helm.exe upgrade --install test-release .\\helm\\devops-task-api --set image.tag=%BUILD_NUMBER% --kubeconfig C:\\Users\\91998\\.kube\\config'
-		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config rollout status deployment/test-release-devops-task-api --timeout=120s'
+		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config rollout status deployment/test-release-devops-task-api --timeout=300s'
 		bat 'kubectl --kubeconfig C:\\Users\\91998\\.kube\\config get pods -l app=devops-task-api -o wide'
 		}
 	}
